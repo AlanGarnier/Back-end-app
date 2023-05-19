@@ -16,12 +16,13 @@ app.use(express.json());
 // Analyse des requêtes dont le type de contenu est - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
 
-const db = require('./app/models');
+const db = require('./app/models/user.model');
 
 
 
 
 // Route
+require('./app/routes/user.routes')(app);
 app.get('/',(req,res) => {
     res.json({message: 'Welcome to my application'})
 });
