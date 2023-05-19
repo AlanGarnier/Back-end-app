@@ -16,10 +16,18 @@ app.use(express.json());
 // Analyse des requêtes dont le type de contenu est - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
 
+const db = require('./app/models');
+
+
+
+
 // Route
 app.get('/',(req,res) => {
     res.json({message: 'Welcome to my application'})
 });
+
+
+
 
 // Configuration du port, ecoute des requêtes
 const PORT = process.env.PORT || 8080;
