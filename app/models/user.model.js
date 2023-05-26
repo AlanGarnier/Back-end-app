@@ -7,7 +7,6 @@ const User = function (user) {
     this.users_firstName = user.users_firstName;
     this.users_mail = user.users_mail;
     this.users_phone = user.users_phone;
-    //this.users_login = user.users_login;
     this.users_password = user.users_password;
     this.users_cagnotte = user.users_cagnotte;
     this.users_rewards = user.users_rewards;
