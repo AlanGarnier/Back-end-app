@@ -1,7 +1,7 @@
-// Import du user model
-const User = require('../models/user.model');
+// Import du menu model
+const Menu = require('../models/menu.model');
 
-// Create and Save a new User
+// Create and Save a new Menu
 exports.create = (req, res) => {
     // Verifification de la requête
     if (!req.body) {
@@ -11,31 +11,25 @@ exports.create = (req, res) => {
 
     }
 
-    const user = new User({
-        //users_id:0,
-        users_lastName: req.body.users_lastName,
-        users_firstName: req.body.users_firstName,
-        users_mail: req.body.users_mail,
-        users_phone: req.body.users_phone,
-        users_password: req.body.users_password,
-        role_id: req.body.role_id,
-        department_id: req.body.department_id,
-        //users_password: bcrypt.hashSync(req.body.users_password,8)
+    const menu = new Menu({
+        menu_name: req.body.menu_name,
+        menu_price: req.body.menu_price,
+        menu_is_available: 1,
     });
 
-    User.create(user, (err, data) => {
+    Menu.create(menu, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
-                err.message || "Une erreur est survenue lors le création"
+                    err.message || "Une erreur est survenue lors le création"
             });
         else res.send(data);
     });
 };
 
-// Retrieve all Users from the database (with condition).
+// Retrieve all Menus from the database (with condition).
 exports.findAll = (req, res) => {
-    User.getAll((err, data) => {
+    Menu.getAll((err, data) => {
         if (err)
             res.status(500).send({
                 message:
@@ -45,18 +39,18 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single User with an id
+// Find a single Menu with an id
 exports.findOne = (req, res) => {
-    User.findById(req.params.id, (err, data) => {
+    Menu.findById(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'Menu non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                        message: "Une erreur est survenue lors la récupération de cet utilisateur"
+                    message: "Une erreur est survenue lors la récupération de ce menu"
                 });
             }
         }
@@ -64,7 +58,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a User identified by the id in the request
+// Update a Menu identified by the id in the request
 exports.update = (req, res) => {
     // Verifification de la requête
     if (!req.body) {
@@ -76,16 +70,16 @@ exports.update = (req, res) => {
     // Affichage des données
     console.log(req.body);
 
-    User.updateById(req.params.id, new User(req.body), (err, data) => {
+    Menu.updateById(req.params.id, new Menu(req.body), (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'Menu non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                    message: "Une erreur est survenue lors la mise à jour de cet utilisateur"
+                    message: "Une erreur est survenue lors la mise à jour de ce menu"
                 });
             }
         }
@@ -93,21 +87,21 @@ exports.update = (req, res) => {
     })
 };
 
-// Delete a User with the specified id in the request
+// Delete a Menu with the specified id in the request
 exports.delete = (req, res) => {
-    User.remote(req.params.id, (err, data) => {
+    Menu.remote(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'Menu non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                    message: "Une erreur est survenue lors la suppression de cet utilisateur"
+                    message: "Une erreur est survenue lors la suppression de ce menu"
                 });
             }
         }
-        else res.send({message: 'Utilisateur supprimer'});
+        else res.send({message: 'Menu supprimé'});
     })
 };

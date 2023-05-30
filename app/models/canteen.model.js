@@ -8,6 +8,8 @@ const Canteen = function (canteen) {
     this.canteen_mail = canteen.canteen_mail;
     this.canteen_phone = canteen.canteen_phone;
     this.canteen_password = canteen.canteen_password;
+    this.role_id = canteen.role_id;
+
 }
 
 // Requêtes

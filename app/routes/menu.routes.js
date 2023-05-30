@@ -1,4 +1,4 @@
-const menu = require("../controllers/menu.controller");
+
 module.exports = app => {
     // Import du menuController
     const menu = require('../controllers/menu.controller');
@@ -7,13 +7,13 @@ module.exports = app => {
 
     // Créer un menu
     router.post('/', menu.create);
-    // Récuper les utilisateurs
+    // Récupérer les menus
     router.get('/', menu.findAll);
-    // Récuper un utilisateur
+    // Récupérer un menu
     router.get('/:id', menu.findOne);
-    // Mettre à jour un utilisateur
+    // Mettre à jour un menu
     router.put('/:id', menu.update);
-    // Supprimer un utilisateur
+    // Supprimer un menu
     router.delete('/:id', menu.delete);
 
     app.use('/api/menu', router);

@@ -10,7 +10,9 @@ const User = function (user) {
     this.users_password = user.users_password;
     this.users_cagnotte = user.users_cagnotte;
     this.users_rewards = user.users_rewards;
-}
+    this.role_id = user.role_id;
+    this.department_id = user.department_id;
+};
 
 // Requêtes
 User.create = (newUser, result) => {

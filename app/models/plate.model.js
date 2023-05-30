@@ -5,6 +5,7 @@ const sql = require('./db');
 const Plate = function (plate) {
     this.plate_name = plate.plate_name;
     this.plate_description = plate.plate_description;
+    this.type_plate_id = plate.type_plate_id;
     //this.plate_is_available = plate.plate_is_available;
 }
 
@@ -50,8 +51,8 @@ Plate.getAll = (result) => {
 };
 
 Plate.updateById = (id, plate, result) => {
-    sql.query('UPDATE PLATE SET plate_name = ?, plate_description = ?,plate_is_available = ? WHERE plate_id = ?',
-        [plate.plate_name,plate.plate_description,plate.plate_is_available,plate.id],
+    sql.query('UPDATE PLATE SET plate_name = ?, plate_description = ?,type_plate_id = ? WHERE plate_id = ?',
+        [plate.plate_name,plate.plate_description,plate.type_plate_id,plate.id],
         (err,res) => {
             if (err) {
                 console.log('Error: ', err);

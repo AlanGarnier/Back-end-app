@@ -19,15 +19,20 @@ app.use(express.urlencoded({extended: true}));
 const db = require('./app/models/user.model');
 
 
-
+app.get('/',(req,res) => {
+    res.json({message: 'Welcome to my home'})
+});
 
 // Route
 require('./app/routes/user.routes')(app);
-app.get('/',(req,res) => {
-    res.json({message: 'Welcome to my application'})
-});
-
-
+require('./app/routes/canteen.routes')(app);
+require('./app/routes/role.routes')(app);
+require('./app/routes/departement.routes')(app);
+require('./app/routes/procurement.routes')(app);
+require('./app/routes/menu.routes')(app);
+require('./app/routes/plate.routes')(app);
+require('./app/routes/typePlate.routes')(app);
+require('./app/routes/status.routes')(app);
 
 
 // Configuration du port, ecoute des requêtes

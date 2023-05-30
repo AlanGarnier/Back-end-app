@@ -1,4 +1,4 @@
-const department = require("../controllers/department.controller");
+
 module.exports = app => {
     // Import du departmentController
     const department = require('../controllers/department.controller');
@@ -7,14 +7,14 @@ module.exports = app => {
 
     // Créer un department
     router.post('/', department.create);
-    // Récuper les utilisateurs
-    router.get('/', department.findAll);
-    // Récuper un utilisateur
+    // Récupérer les départements
+   router.get('/', department.findAll);
+    // Récupérer un département
     router.get('/:id', department.findOne);
-    // Mettre à jour un utilisateur
-    router.put('/:id', department.update);
-    // Supprimer un utilisateur
-    router.delete('/:id', department.delete);
+    // Mettre à jour un département
+   /*  router.put('/:id', department.update);
+    // Supprimer un département
+    router.delete('/:id', department.delete);*/
 
     app.use('/api/department', router);
 }

@@ -6,9 +6,9 @@ module.exports = app => {
 
     // Créer un user
     router.post('/', users.create);
-    // Récuper les utilisateurs
+    // Récupérer les utilisateurs
     router.get('/', users.findAll);
-    // Récuper un utilisateur
+    // Récupérer un utilisateur
     router.get('/:id', users.findOne);
     // Mettre à jour un utilisateur
     router.put('/:id', users.update);

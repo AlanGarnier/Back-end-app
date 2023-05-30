@@ -9,6 +9,7 @@ const Procurement = function (procurement) {
     this.is_rewards = procurement.is_rewards;
     this.is_credit = procurement.is_credit;
     this.is_debit = procurement.is_debit;
+    this.users_id = procurement.users_id;
 }
 
 // Requêtes
@@ -40,8 +41,24 @@ Procurement.findByType = (type, result) => {
     });
 };
 
+Procurement.findCreditByUser = (id, result) => {
+    sql.query('SELECT * FROM PROCUREMENT WHERE is_cagnotte = 1 AND is_credit = 1 AND id_user = ${id}', (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+        if (res.length) {
+            console.log("Aprovisionnement trouvé: ", res[0]);
+            result(err, res[0]);
+        }
+        // Aprovisionnement non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+}
+
+
 Procurement.getAll = (result) => {
-    sql.query('SELECT * FROM PROCUREMENT', (err,res) => {
+    sql.query('SELECT * FROM PROCUREMENT WHERE is_cagnotte = 1', (err,res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);

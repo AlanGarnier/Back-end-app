@@ -1,4 +1,4 @@
-const plate = require("../controllers/plate.controller");
+
 module.exports = app => {
     // Import du plateController
     const plate = require('../controllers/plate.controller');
@@ -7,9 +7,9 @@ module.exports = app => {
 
     // Créer un plate
     router.post('/', plate.create);
-    // Récuper les utilisateurs
+    // Récupérer les utilisateurs
     router.get('/', plate.findAll);
-    // Récuper un utilisateur
+    // Récupérer un utilisateur
     router.get('/:id', plate.findOne);
     // Mettre à jour un utilisateur
     router.put('/:id', plate.update);

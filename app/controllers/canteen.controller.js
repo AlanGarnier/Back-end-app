@@ -1,7 +1,7 @@
-// Import du user model
-const User = require('../models/user.model');
+// Import du canteen model
+const Canteen = require('../models/canteen.model');
 
-// Create and Save a new User
+// Create and Save a new Canteen
 exports.create = (req, res) => {
     // Verifification de la requête
     if (!req.body) {
@@ -11,31 +11,30 @@ exports.create = (req, res) => {
 
     }
 
-    const user = new User({
-        //users_id:0,
-        users_lastName: req.body.users_lastName,
-        users_firstName: req.body.users_firstName,
-        users_mail: req.body.users_mail,
-        users_phone: req.body.users_phone,
-        users_password: req.body.users_password,
+    const canteen = new Canteen({
+        //canteen_id:0,
+        canteen_lastName: req.body.canteen_lastName,
+        canteen_firstName: req.body.canteen_firstName,
+        canteen_mail: req.body.canteen_mail,
+        canteen_phone: req.body.canteen_phone,
+        canteen_password: req.body.canteen_password,
         role_id: req.body.role_id,
-        department_id: req.body.department_id,
-        //users_password: bcrypt.hashSync(req.body.users_password,8)
+        //canteen_password: bcrypt.hashSync(req.body.canteen_password,8)
     });
 
-    User.create(user, (err, data) => {
+    Canteen.create(canteen, (err, data) => {
         if (err)
             res.status(500).send({
                 message:
-                err.message || "Une erreur est survenue lors le création"
+                    err.message || "Une erreur est survenue lors le création"
             });
         else res.send(data);
     });
 };
 
-// Retrieve all Users from the database (with condition).
+// Retrieve all Canteens from the database (with condition).
 exports.findAll = (req, res) => {
-    User.getAll((err, data) => {
+    Canteen.getAll((err, data) => {
         if (err)
             res.status(500).send({
                 message:
@@ -45,18 +44,18 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single User with an id
+// Find a single Canteen with an id
 exports.findOne = (req, res) => {
-    User.findById(req.params.id, (err, data) => {
+    Canteen.findById(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'cantinière non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                        message: "Une erreur est survenue lors la récupération de cet utilisateur"
+                    message: "Une erreur est survenue lors la récupération de la cantinière"
                 });
             }
         }
@@ -64,7 +63,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a User identified by the id in the request
+// Update a Canteen identified by the id in the request
 exports.update = (req, res) => {
     // Verifification de la requête
     if (!req.body) {
@@ -76,16 +75,16 @@ exports.update = (req, res) => {
     // Affichage des données
     console.log(req.body);
 
-    User.updateById(req.params.id, new User(req.body), (err, data) => {
+    Canteen.updateById(req.params.id, new Canteen(req.body), (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'cantinière non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                    message: "Une erreur est survenue lors la mise à jour de cet utilisateur"
+                    message: "Une erreur est survenue lors la mise à jour de la cantinière"
                 });
             }
         }
@@ -93,21 +92,21 @@ exports.update = (req, res) => {
     })
 };
 
-// Delete a User with the specified id in the request
+// Delete a Canteen with the specified id in the request
 exports.delete = (req, res) => {
-    User.remote(req.params.id, (err, data) => {
+    Canteen.remote(req.params.id, (err, data) => {
         if (err) {
             if (err.kind === 'not_found') {
                 res.status(404).send({
-                    message: 'Utilisateur non trouvé'
+                    message: 'cantinière non trouvé'
                 });
             }
             else {
                 res.status(500).send({
-                    message: "Une erreur est survenue lors la suppression de cet utilisateur"
+                    message: "Une erreur est survenue lors la suppression de la cantinière"
                 });
             }
         }
-        else res.send({message: 'Utilisateur supprimer'});
+        else res.send({message: 'cantinière supprimé'});
     })
 };

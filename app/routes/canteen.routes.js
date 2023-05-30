@@ -1,4 +1,4 @@
-const canteen = require("../controllers/canteen.controller");
+
 module.exports = app => {
     // Import du canteenController
     const canteen = require('../controllers/canteen.controller');
@@ -7,9 +7,9 @@ module.exports = app => {
 
     // Créer un canteen
     router.post('/', canteen.create);
-    // Récuper les utilisateurs
+    // Récupérer les utilisateurs
     router.get('/', canteen.findAll);
-    // Récuper un utilisateur
+    // Récupérer un utilisateur
     router.get('/:id', canteen.findOne);
     // Mettre à jour un utilisateur
     router.put('/:id', canteen.update);

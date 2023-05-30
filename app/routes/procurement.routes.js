@@ -1,20 +1,18 @@
-const procurement = require("../controllers/procurement.controller");
+
 module.exports = app => {
     // Import du procurementController
     const procurement = require('../controllers/procurement.controller');
     // Import du router
     const router = require('express').Router();
 
-    // Créer un procurement
+    // Créer un approvisonnement
     router.post('/', procurement.create);
-    // Récuper les utilisateurs
-    router.get('/', procurement.findAll);
-    // Récuper un utilisateur
-    router.get('/:id', procurement.findOne);
-    // Mettre à jour un utilisateur
-    router.put('/:id', procurement.update);
-    // Supprimer un utilisateur
-    router.delete('/:id', procurement.delete);
+    // Récupérerer les approvisonnements
+    router.get('/', procurement.getAll);
+    // Récupérerer un approvisonnement
+    router.get('/findCredit/:id', procurement.findCreditByUser);
+    // Récupérerer un approvisonnement
+    router.get('/findDebit/:id', procurement.findDebitByUser);
 
     app.use('/api/procurement', router);
 }
