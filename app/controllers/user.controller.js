@@ -13,12 +13,14 @@ exports.create = (req, res) => {
 
     const user = new User({
         //users_id:0,
-        users_lastName: req.body.users_lastName,
-        users_firstName: req.body.users_firstName,
-        users_mail: req.body.users_mail,
-        users_phone: req.body.users_phone,
-        users_password: req.body.users_password,
-        role_id: req.body.role_id,
+        lastname: req.body.lastname,
+        firstname: req.body.firstname,
+        email: req.body.email,
+        phone: req.body.phone,
+        password: req.body.password,
+        cagnotte: null,
+        rewards: null,
+        role_id: 1,
         department_id: req.body.department_id,
         //users_password: bcrypt.hashSync(req.body.users_password,8)
     });
@@ -63,6 +65,18 @@ exports.findOne = (req, res) => {
         else res.send(data);
     });
 };
+
+exports.duplicateEmail = (req, res) => {
+    User.findByEmail(req.body.email, (err, data) => {
+        if (data) {
+            res.status(500).send({
+                message:
+                    "L' email existe déjà !"
+            });
+        }
+
+    })
+}
 
 // Update a User identified by the id in the request
 exports.update = (req, res) => {

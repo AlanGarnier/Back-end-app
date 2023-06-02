@@ -3,13 +3,13 @@ const sql = require('./db');
 
 // Constructeur
 const User = function (user) {
-    this.users_lastName = user.users_lastName;
-    this.users_firstName = user.users_firstName;
-    this.users_mail = user.users_mail;
-    this.users_phone = user.users_phone;
-    this.users_password = user.users_password;
-    this.users_cagnotte = user.users_cagnotte;
-    this.users_rewards = user.users_rewards;
+    this.users_lastName = user.lastname;
+    this.users_firstName = user.firstname;
+    this.users_mail = user.email;
+    this.users_phone = user.phone;
+    this.users_password = user.password;
+    this.users_cagnotte = user.cagnotte;
+    this.users_rewards = user.rewards;
     this.role_id = user.role_id;
     this.department_id = user.department_id;
 };
@@ -42,12 +42,48 @@ User.findById = (id, result) => {
         result({kind: 'non trouvé'}, null);
     });
 };
+User.findByEmail = (email, result) => {
+    sql.query('SELECT * FROM USERS WHERE users_mail = ?', [email], (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Utilisateur trouvé: ", res[0]);
+            result(err, res[0]);
+            return;
+        }
+        // Utilisateur non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+};
+
+User.getCredentials = (email , result) => {
+    sql.query('SELECT users_mail, users_password FROM USERS WHERE users_mail = ?', [email], (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Utilisateur trouvé: ", res[0]);
+            result(err, res[0]);
+            return;
+        }
+        // Utilisateur non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+}
 
 User.getAll = (result) => {
     sql.query('SELECT * FROM USERS', (err,res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);
+            return;
         }
 
         console.log('Users : ',res);

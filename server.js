@@ -5,6 +5,8 @@ const cors = require("cors");
 // Création d'une appli express
 const app = express();
 
+require('dotenv').config();
+
 const corsOption = {
     origin: "http:/localhost:8081"
 };
@@ -15,9 +17,6 @@ app.use(cors(corsOption));
 app.use(express.json());
 // Analyse des requêtes dont le type de contenu est - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
-
-const db = require('./app/models/user.model');
-
 
 app.get('/',(req,res) => {
     res.json({message: 'Welcome to my home'})
@@ -34,6 +33,8 @@ require('./app/routes/plate.routes')(app);
 require('./app/routes/typePlate.routes')(app);
 require('./app/routes/status.routes')(app);
 
+const router = require('./app/routes/api.routes');
+app.use('/api', router);
 
 // Configuration du port, ecoute des requêtes
 const PORT = process.env.PORT || 8080;
