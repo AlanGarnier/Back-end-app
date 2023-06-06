@@ -3,9 +3,6 @@
 const { check, body, validationResult} = require('express-validator');
 const users = require("../controllers/user.controller");
 
-/*const  confirmPassword = (req) => {
-    return req.body.password;
-}*/
 
 signUpValidation =  [
 
@@ -33,20 +30,6 @@ signUpValidation =  [
         }),
 ]
 
-/*validateConfirmPassword = [
-    check('confirmPassword')
-        .trim()
-        .notEmpty()
-        .escape()
-        .custom(async (confirmPassword, { req }) => {
-            const password = req.body.password;
-
-            if(password !== confirmPassword){
-                throw new Error('Passwords must be same')
-            }
-        })
-]*/
-
 signInValidation = [
     check('email','Le champ email ne peut pas être vide et doit être un email valide').notEmpty().isEmail().normalizeEmail({gmail_remove_dots: false}).escape(),
     check('password','Le champ mot de passe ne peut pas être vide et doit contenir au minimum 8 caractères').notEmpty().isLength({min: 8}).escape(),
@@ -54,33 +37,9 @@ signInValidation = [
 
 ]
 
-
-/*
-validated = (req, res, next) => {
-
-    const result = validationResult(req);
-
-    if (result.isEmpty() === true) {
-        return next;
-    }
-
-    const extractedErrors = []
-    result.array().map(err => extractedErrors.push({ [err.type]: err.msg }))
-
-    return res.status(422).json({
-        errors: extractedErrors,
-        // data: result.isEmpty(),
-        // data2: result,
-    })
-}
-*/
-
-
-
 const validate = {
     signUpValidation: signUpValidation,
     signInValidation: signInValidation,
-   // validated: validated
 };
 
 module.exports = validate;

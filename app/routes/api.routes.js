@@ -17,6 +17,7 @@ const auth = require("../config/auth.config");
 
 
 // Auth routes
+// Inscription
 router.post('/signup',validateMiddleware.signUpValidation, (req, res) => {
     // On récupère le tableau des erreurs
     const result = validationResult(req);
@@ -60,7 +61,7 @@ router.post('/signup',validateMiddleware.signUpValidation, (req, res) => {
         res.send({ errors: result.array() });
     }
 });
-
+// Connexion
 router.post('/login',validateMiddleware.signInValidation, (req, res) => {
     // On récupère le tableau des erreurs
     const result = validationResult(req);
@@ -93,7 +94,7 @@ router.post('/login',validateMiddleware.signInValidation, (req, res) => {
                else {
                    let token = jwt.sign({id: data['users_id']}, auth.secret, {expiresIn: '1h'} )
                    res.send({
-                       message: "Vous êtes cnnecté",
+                       message: "Vous êtes connecté",
                        authToken: token
                    })
                }
