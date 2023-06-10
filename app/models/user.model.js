@@ -42,6 +42,7 @@ User.findById = (id, result) => {
         result({kind: 'non trouvé'}, null);
     });
 };
+
 User.findByEmail = (email, result) => {
     sql.query('SELECT * FROM USERS WHERE users_mail = ?', [email], (err, res) => {
         if (err) {

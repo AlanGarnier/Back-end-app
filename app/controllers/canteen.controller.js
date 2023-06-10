@@ -1,5 +1,6 @@
 // Import du canteen model
 const Canteen = require('../models/canteen.model');
+const User = require("../models/user.model");
 
 // Create and Save a new Canteen
 exports.create = (req, res) => {
@@ -13,12 +14,12 @@ exports.create = (req, res) => {
 
     const canteen = new Canteen({
         //canteen_id:0,
-        canteen_lastName: req.body.canteen_lastName,
-        canteen_firstName: req.body.canteen_firstName,
-        canteen_mail: req.body.canteen_mail,
-        canteen_phone: req.body.canteen_phone,
-        canteen_password: req.body.canteen_password,
-        role_id: req.body.role_id,
+        canteen_lastName: req.body.lastname,
+        canteen_firstName: req.body.firstname,
+        canteen_mail: req.body.email,
+        canteen_phone: req.body.phone,
+        canteen_password: req.body.password,
+        role_id: 2,
         //canteen_password: bcrypt.hashSync(req.body.canteen_password,8)
     });
 
@@ -63,6 +64,17 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.duplicateEmail = (req, res) => {
+    Canteen.findByEmail(req.body.email, (err, data) => {
+        if (data) {
+            res.status(500).send({
+                message:
+                    "L' email existe déjà !"
+            });
+        }
+
+    })
+}
 // Update a Canteen identified by the id in the request
 exports.update = (req, res) => {
     // Verifification de la requête

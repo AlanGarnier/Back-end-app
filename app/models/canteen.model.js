@@ -3,11 +3,11 @@ const sql = require('./db');
 
 // Constructeur
 const Canteen = function (canteen) {
-    this.canteen_lastName = canteen.canteen_lastName;
-    this.canteen_firstName = canteen.canteen_firstName;
-    this.canteen_mail = canteen.canteen_mail;
-    this.canteen_phone = canteen.canteen_phone;
-    this.canteen_password = canteen.canteen_password;
+    this.canteen_lastName = canteen.lastname;
+    this.canteen_firstName = canteen.firstname;
+    this.canteen_mail = canteen.email;
+    this.canteen_phone = canteen.phone;
+    this.canteen_password = canteen.password;
     this.role_id = canteen.role_id;
 
 }
@@ -41,6 +41,24 @@ Canteen.findById = (id, result) => {
     });
 };
 
+Canteen.findByEmail = (email, result) => {
+    sql.query('SELECT * FROM CANTEEN WHERE canteen_mail = ?', [email], (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Cantinière trouvée: ", res[0]);
+            result(err, res[0]);
+            return;
+        }
+        // Utilisateur non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+};
+
 Canteen.getAll = (result) => {
     sql.query('SELECT * FROM CANTEEN', (err,res) => {
         if (err) {
@@ -69,6 +87,24 @@ Canteen.updateById = (id, canteen, result) => {
         }
     );
 };
+
+Canteen.getCredentials = (email , result) => {
+    sql.query('SELECT canteen_mail, canteen_password FROM USERS WHERE canteen_mail = ?', [email], (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("Utilisateur trouvé: ", res[0]);
+            result(err, res[0]);
+            return;
+        }
+        // Utilisateur non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+}
 
 Canteen.remote = (id, result) => {
     sql.query('DELETE FROM CANTEEN WHERE canteen_id = ?', id, (err, res) => {
