@@ -34,7 +34,6 @@ router.post('/signup',validateMiddleware.signUpValidation, (req, res) => {
             rewards: null,
             role_id: 1,
             department_id: req.body.department_id,
-            //users_password: bcrypt.hashSync(req.body.users_password,8)
         });
 
         User.findByEmail(req.body.email, (err, data) => {
@@ -72,13 +71,11 @@ router.post('/login',validateMiddleware.signInValidation, (req, res) => {
             if (!data) {
                 res.status(400).send({
                     message: "Votre email ou mot de passe est incorrect"
-
                 });
             }
             else if (data['users_mail'] !== (req.body.email)) {
                 res.status(400).send({
                     message: "Veuillez véfier votre email"
-
                 });
             }
             else {
@@ -92,16 +89,13 @@ router.post('/login',validateMiddleware.signInValidation, (req, res) => {
                    })
                }
                else {
-                   let token = jwt.sign({id: data['users_id']}, auth.secret, {expiresIn: '1h'} )
+                   let token = jwt.sign({id: data['users_id'], role: data['role_id']}, auth.secret, {expiresIn: '1h'} )
                    res.send({
                        message: "Vous êtes connecté",
                        authToken: token
                    })
                }
             }
-
-
-
         })
     }
     else {
@@ -112,7 +106,9 @@ router.post('/login',validateMiddleware.signInValidation, (req, res) => {
 /*app.use('/api/users', router)
     .post('/users', users.create);*/
 
+// Order routes
 
+router.post('', );
 
 
 

@@ -20,8 +20,7 @@ Procurement.create = (newProcurement, result) => {
             result(err, null);
         }
 
-        console.log('Aprovisionnement créé: ', {id: res.insertId, newProcurement});
-        result(null, {id: res.insertId, newProcurement})
+        result(null, 'Aprovisionnement créé')
     });
 };
 

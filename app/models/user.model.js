@@ -62,7 +62,7 @@ User.findByEmail = (email, result) => {
 };
 
 User.getCredentials = (email , result) => {
-    sql.query('SELECT users_mail, users_password FROM USERS WHERE users_mail = ?', [email], (err, res) => {
+    sql.query('SELECT users_mail, users_password, users_id, role_id FROM USERS WHERE users_mail = ?', [email], (err, res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);

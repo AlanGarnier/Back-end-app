@@ -8,7 +8,6 @@ exports.create = (req, res) => {
         res.status(400).send({
             message: 'Les champs ne peuvent pas etre vides'
         });
-
     }
 
     const user = new User({

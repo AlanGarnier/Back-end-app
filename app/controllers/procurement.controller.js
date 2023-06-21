@@ -1,38 +1,39 @@
 // Import du procurement model
 const Procurement = require('../models/procurement.model');
+const moment = require('moment');
 
-// Create and Save a new Procurement
+// Creer and enregiter a nouvel  "Procurement"
 exports.create = (req, res) => {
     // Verifification de la requête
     if (!req.body) {
         res.status(400).send({
-            message: 'Les champs ne peuvent pas etre vides'
+            message: 'Les champs ne peuvent pas être vides'
         });
-
     }
+    // Récupération de la date courante
+    const fullDate = moment().format('Y-m-d HH:mm:ss');
     function getProcurement(req)
     {
         if (req.body.type === 'credit')
         {
             return new Procurement({
-                procurement_amount: req.body.procurement_amount,
-                procurement_date: req.body.procurement_date,
+                procurement_amount: req.body.amount,
+                procurement_date: fullDate,
                 is_cagnotte: 1,
                 is_credit: 1,
-                users_id: req.body.users_id,
+                users_id: req.body.user,
             });
         }
         else if (req.body.type === 'debit')
         {
             return new Procurement({
-                procurement_amount: req.body.procurement_amount,
-                procurement_date: req.body.procurement_date,
+                procurement_amount: req.body.amount,
+                procurement_date: fullDate,
                 is_cagnotte: 1,
                 is_debit: 1,
-                users_id: req.body.users_id,
+                users_id: req.body.user,
             });
         }
-
     }
 
 
@@ -42,7 +43,9 @@ exports.create = (req, res) => {
                 message:
                     err.message || "Une erreur est survenue lors le création"
             });
-        else res.send(data);
+        else res.send({
+            message: "Approvisionnement effectué"
+        });
     });
 };
 
@@ -54,7 +57,6 @@ exports.getAll = (req, res) => {
                 message:
                     err.message || "Une erreur est survenue lors la récupération"
             });
-        else res.send(data);
     });
 };
 
