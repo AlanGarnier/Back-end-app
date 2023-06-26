@@ -2,6 +2,9 @@
 const Order = require('../models/commande.model');
 const moment = require('moment');
 
+// Récupération de la date courante
+const fullDate = moment().format('Y-m-d HH:mm:ss');
+
 exports.create = (req, res) => {
     // Verification de la requête
     if (!req.body) {
@@ -10,8 +13,7 @@ exports.create = (req, res) => {
         });
     }
 
-    // Récupération de la date courante
-    const fullDate = moment().format('Y-m-d HH:mm:ss');
+
 
     const order = new Order({
         userId: req.body.userId,
@@ -61,6 +63,42 @@ exports.findOne = (req, res) => {
         else res.send(data);
     });
 };
+
+exports.dailyOrder = (req, res) => {
+    Order.getAllOfDay(fullDate, (err, data) => {
+        if (err) {
+            if (err.kind === 'not_found') {
+                res.status(404).send({
+                    message: "Pas de commande aujourd'hui "
+                });
+            }
+            else {
+                res.status(500).send({
+                    message: "Une erreur est survenue lors la récupération des commandes du jour"
+                });
+            }
+        }
+        else res.send(data);
+    })
+}
+
+exports.customerDailyOrder = (req, res) => {
+    Order.getAllByUserByDay(req.params.id, fullDate, (err, data) => {
+        if (err) {
+            if (err.kind === 'not_found') {
+                res.status(404).send({
+                    message: "Pas de commande aujourd'hui "
+                });
+            }
+            else {
+                res.status(500).send({
+                    message: "Une erreur est survenue lors la récupération des commandes du jour"
+                });
+            }
+        }
+        else res.send(data);
+    })
+}
 
 exports.cancelOrder =  (req, res) => {
     Order.canceled(req.body.numCom, (err, data) => {

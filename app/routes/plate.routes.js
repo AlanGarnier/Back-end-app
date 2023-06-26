@@ -7,13 +7,19 @@ module.exports = app => {
 
     // Créer un plate
     router.post('/', plate.create);
-    // Récupérer les utilisateurs
+    // Récupérer les plats
     router.get('/', plate.findAll);
-    // Récupérer un utilisateur
-    router.get('/:id', plate.findOne);
-    // Mettre à jour un utilisateur
+    // Récupérer un plat
+    //router.get('/:id', plate.findOne);
+    // Récupérer un plat
+    router.get('/entree', plate.findEntree);
+    // Récupérer un plat
+    router.get('/plat', plate.findPlat);
+    // Récupérer un plat
+    router.get('/dessert', plate.findDessert);
+    // Mettre à jour un plat
     router.put('/:id', plate.update);
-    // Supprimer un utilisateur
+    // Supprimer un plat
     router.delete('/:id', plate.delete);
 
     app.use('/api/plate', router);

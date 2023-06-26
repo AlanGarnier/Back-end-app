@@ -39,24 +39,57 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single Plate with an id
-exports.findOne = (req, res) => {
-    Plate.findById(req.params.id, (err, data) => {
-        if (err) {
-            if (err.kind === 'not_found') {
-                res.status(404).send({
-                    message: 'Plate non trouvé'
-                });
-            }
-            else {
-                res.status(500).send({
-                    message: "Une erreur est survenue lors la récupération de ce plate"
-                });
-            }
-        }
-        else res.send(data);
-    });
+exports.findEntree = (req, res) => {
+   Plate.getEntree((err, data) => {
+       if (err)
+           res.status(500).send({
+               message:
+                   err.message || "Une erreur est survenue lors la récupération"
+           });
+       else res.send(data);
+   });
 };
+
+exports.findPlat = (req,res) => {
+   Plate.getPlat((err,data) => {
+       if (err)
+           res.status(500).send({
+               message:
+                   err.message || "Une erreur est survenue lors la récupération"
+           });
+       else res.send(data);
+   });
+};
+
+exports.findDessert = (req,res) => {
+   Plate.getDessert((err,data) => {
+       if (err)
+           res.status(500).send({
+               message:
+                   err.message || "Une erreur est survenue lors la récupération"
+           });
+       else res.send(data);
+   });
+};
+
+// Find a single Plate with an id
+// exports.findOne = (req, res) => {
+//     Plate.findById(req.params.id, (err, data) => {
+//         if (err) {
+//             if (err.kind === 'not_found') {
+//                 res.status(404).send({
+//                     message: 'Plate non trouvé'
+//                 });
+//             }
+//             else {
+//                 res.status(500).send({
+//                     message: "Une erreur est survenue lors la récupération de ce plate"
+//                 });
+//             }
+//         }
+//         else res.send(data);
+//     });
+// };
 
 // Update a Plate identified by the id in the request
 exports.update = (req, res) => {

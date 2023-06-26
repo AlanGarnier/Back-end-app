@@ -1,7 +1,6 @@
 // Import de la connexion
 const sql = require('./db');
 
-
 // Constructeur
 const Order = function (order) {
     this.users_id = order.userId;
@@ -31,7 +30,23 @@ Order.findByUser = (user, result) => {
         }
 
         if (res.length) {
-            console.log("Aprovisionnement trouvé: ", res[0]);
+            console.log("Commandes : ", res[0]);
+            result(err, res[0]);
+        }
+        // Aprovisionnement non trouvé
+        result({kind: 'non trouvé'}, null);
+    });
+};
+
+Order.getAllByUserByDay = (user, date, result) => {
+    sql.query("SELECT * FROM COMMANDE WHERE users_id = ${user} AND commande_date = ${date}", (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+
+        if (res.length) {
+            console.log("Commandes du jour: ", res[0]);
             result(err, res[0]);
         }
         // Aprovisionnement non trouvé
@@ -41,6 +56,18 @@ Order.findByUser = (user, result) => {
 
 Order.getAll = (result) => {
     sql.query('SELECT * FROM COMMANDE', (err, res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+
+        console.log('Commandes : ',res);
+        result(null, res);
+    })
+}
+
+Order.getAllOfDay = (date, result) => {
+    sql.query('SELECT * FROM COMMANDE WHERE commande_date = ?',date, (err,res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);

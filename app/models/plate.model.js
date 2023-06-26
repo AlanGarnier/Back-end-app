@@ -23,7 +23,7 @@ Plate.create = (newPlate, result) => {
 };
 
 Plate.findById = (id, result) => {
-    sql.query('SELECT * FROM PLATE WHERE plate_id = ${id}', (err, res) => {
+    sql.query('SELECT * FROM PLATE WHERE plate_id = ?', [id] , (err, res) => {
         if (err) {
             console.log('Error: ', err);
             result(err, null);
@@ -37,6 +37,47 @@ Plate.findById = (id, result) => {
         result({kind: 'non trouvé'}, null);
     });
 };
+
+Plate.getEntree = (result) => {
+    sql.query('SELECT plate_id, plate_name FROM PLATE WHERE type_plate_id = 1', (err,res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+
+        console.log('Plates : ',res);
+        result(null, res);
+
+    });
+}
+
+
+Plate.getPlat = (result) => {
+    sql.query('SELECT plate_id, plate_name FROM PLATE WHERE type_plate_id = 2', (err,res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+
+        console.log('Plates : ',res);
+        result(null, res);
+
+    });
+}
+
+
+Plate.getDessert = (result) => {
+    sql.query('SELECT plate_id, plate_name FROM PLATE WHERE type_plate_id = 3', (err,res) => {
+        if (err) {
+            console.log('Error: ', err);
+            result(err, null);
+        }
+
+        console.log('Plates : ',res);
+        result(null, res);
+
+    });
+}
 
 Plate.getAll = (result) => {
     sql.query('SELECT * FROM PLATE', (err,res) => {

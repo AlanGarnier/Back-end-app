@@ -6,7 +6,7 @@ module.exports = app => {
     const router = require('express').Router();
 
     // Créer un menu
-    router.post('/', menu.create);
+    router.post('/add', menu.create);
     // Récupérer les menus
     router.get('/', menu.findAll);
     // Récupérer un menu
